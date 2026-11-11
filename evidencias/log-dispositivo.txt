@@ -1,0 +1,55 @@
+1 {"sala":"ce01","temperatura":25.8,"umidade":62.6,"ts":1794421315}
+2 {"sala":"ce01","temperatura":26.4,"umidade":62.8,"ts":1794421316}
+3 {"sala":"ce01","temperatura":27.1,"umidade":63.3,"ts":1794421316}
+4 {"sala":"ce01","temperatura":27.9,"umidade":62.4,"ts":1794421317}
+5 {"sala":"ce01","temperatura":28.7,"umidade":61.8,"ts":1794421318}
+comando LIGAR temperatura >= 28
+6 {"sala":"ce01","temperatura":28.2,"umidade":61.9,"ts":1794421319}
+7 {"sala":"ce01","temperatura":27.7,"umidade":62.3,"ts":1794421319}
+8 {"sala":"ce01","temperatura":27.2,"umidade":62.6,"ts":1794421320}
+9 {"sala":"ce01","temperatura":26.8,"umidade":62.3,"ts":1794421321}
+10 {"sala":"ce01","temperatura":26.3,"umidade":62.1,"ts":1794421321}
+11 {"sala":"ce01","temperatura":25.6,"umidade":63,"ts":1794421322}
+comando DESLIGAR temperatura <= 26
+12 {"sala":"ce01","temperatura":26.4,"umidade":63.2,"ts":1794421323}
+13 {"sala":"ce01","temperatura":27.1,"umidade":63.5,"ts":1794421323}
+14 {"sala":"ce01","temperatura":27.9,"umidade":64.3,"ts":1794421324}
+15 {"sala":"ce01","temperatura":28.7,"umidade":63.5,"ts":1794421325}
+comando LIGAR temperatura >= 28
+16 {"sala":"ce01","temperatura":28.3,"umidade":63.7,"ts":1794421326}
+17 {"sala":"ce01","temperatura":27.8,"umidade":63.5,"ts":1794421326}
+18 {"sala":"ce01","temperatura":27.4,"umidade":62.9,"ts":1794421327}
+19 {"sala":"ce01","temperatura":26.9,"umidade":62.3,"ts":1794421328}
+20 {"sala":"ce01","temperatura":26.1,"umidade":63,"ts":1794421328}
+21 {"sala":"ce01","temperatura":25.8,"umidade":63.2,"ts":1794421329}
+comando DESLIGAR temperatura <= 26
+22 {"sala":"ce01","temperatura":26.4,"umidade":63.5,"ts":1794421330}
+23 {"sala":"ce01","temperatura":27.1,"umidade":63,"ts":1794421330}
+24 {"sala":"ce01","temperatura":27.9,"umidade":63.4,"ts":1794421331}
+25 {"sala":"ce01","temperatura":28.5,"umidade":62.6,"ts":1794421332}
+comando LIGAR temperatura >= 28
+26 {"sala":"ce01","temperatura":28,"umidade":62.5,"ts":1794421333}
+27 {"sala":"ce01","temperatura":27.4,"umidade":63,"ts":1794421333}
+28 {"sala":"ce01","temperatura":27.1,"umidade":62.3,"ts":1794421334}
+29 {"sala":"ce01","temperatura":26.7,"umidade":62.1,"ts":1794421335}
+30 {"sala":"ce01","temperatura":26.3,"umidade":61.8,"ts":1794421335}
+31 {"sala":"ce01","temperatura":26,"umidade":61.5,"ts":1794421336}
+comando DESLIGAR temperatura <= 26
+32 {"sala":"ce01","temperatura":26.7,"umidade":61.1,"ts":1794421337}
+33 {"sala":"ce01","temperatura":27.3,"umidade":60.8,"ts":1794421337}
+34 {"sala":"ce01","temperatura":28.1,"umidade":60.1,"ts":1794421338}
+comando LIGAR temperatura >= 28
+35 {"sala":"ce01","temperatura":27.7,"umidade":59.2,"ts":1794421339}
+36 {"sala":"ce01","temperatura":27.3,"umidade":58.6,"ts":1794421340}
+37 {"sala":"ce01","temperatura":26.7,"umidade":58.8,"ts":1794421340}
+38 {"sala":"ce01","temperatura":26.2,"umidade":59.3,"ts":1794421341}
+39 {"sala":"ce01","temperatura":25.6,"umidade":58.4,"ts":1794421342}
+comando DESLIGAR temperatura <= 26
+40 {"sala":"ce01","temperatura":26.3,"umidade":58.2,"ts":1794421342}
+41 {"sala":"ce01","temperatura":27.1,"umidade":57.4,"ts":1794421343}
+42 {"sala":"ce01","temperatura":27.8,"umidade":57,"ts":1794421344}
+43 {"sala":"ce01","temperatura":28.4,"umidade":56.7,"ts":1794421344}
+comando LIGAR temperatura >= 28
+44 {"sala":"ce01","temperatura":28,"umidade":57.4,"ts":1794421345}
+45 {"sala":"ce01","temperatura":27.4,"umidade":57.2,"ts":1794421346}
+46 {"sala":"ce01","temperatura":27,"umidade":56.7,"ts":1794421347}

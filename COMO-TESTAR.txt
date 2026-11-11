@@ -1,0 +1,152 @@
+COMO TESTAR O PROJETO: SALA INTELIGENTE (IoT)
+=============================================
+
+O QUE O PROJETO FAZ
+-------------------
+Um ESP32 simulado no Wokwi mede temperatura e umidade de uma sala e envia os
+dados por MQTT. O Node-RED, rodando no seu computador, recebe os dados, mostra
+um painel, grava o histórico e decide quando ligar ou desligar o ventilador.
+
+  [Wokwi: ESP32 + DHT22 + relé + LED]
+            |  ^
+   leituras |  | comando LIGAR / DESLIGAR
+            v  |
+      [broker.hivemq.com]   (broker público, não precisa instalar)
+            |  ^
+            v  |
+  [Node-RED no seu PC] --> painel em http://localhost:1880/dashboard/monitor
+            |
+            v
+      nodered/leituras.csv (histórico)
+
+REGRA DE AUTOMAÇÃO
+  - Liga o ventilador quando a temperatura chega a 28 °C ou mais.
+  - Desliga quando cai a 26 °C ou menos.
+  - Entre 26 e 28 °C nada muda (histerese).
+  - O comando só é enviado quando o estado muda, não a cada leitura.
+
+
+PASSO 1. WOKWI (o dispositivo)
+------------------------------
+1. Abra o projeto no Wokwi (wokwi.com) e use os arquivos da pasta wokwi/.
+2. Confirme que o main.py tem, no começo:
+       BROKER = "broker.hivemq.com"
+       SALA = "ce01-marcus"
+   O nome da sala precisa ser igual ao usado no Node-RED. Como o broker é
+   público, escolha um nome que só você use.
+3. Clique no botão verde (Play).
+4. No monitor serial devem aparecer, nesta ordem:
+       wifi ok ...
+       mqtt ok
+       ventilador DESLIGADO
+       publicado {...}   (uma linha a cada 5 segundos)
+
+
+PASSO 2. NODE-RED (o painel e a regra)
+--------------------------------------
+Na primeira vez, instale as dependências (precisa do Node.js):
+
+  cd simulacao && npm install && cd ..
+
+Depois, a partir da pasta do projeto, rode:
+
+  cd nodered && ../simulacao/node_modules/.bin/node-red -u "$PWD/userdir" -s "$PWD/settings.js"
+
+Aguarde aparecer, no terminal:
+  Started flows
+  Connected to broker: nodered-sala-ce01-marcus@mqtt://broker.hivemq.com:1883
+
+Se aparecer "port in use", já existe um Node-RED rodando. Use o que está aberto.
+Para encerrar depois: Ctrl+C no terminal.
+
+Abra no navegador:
+  Painel:  http://localhost:1880/dashboard/monitor
+  Editor:  http://localhost:1880   (opcional, para ver o fluxo)
+
+
+PASSO 3. TESTE DO CICLO COMPLETO
+--------------------------------
+Com o Wokwi rodando e o painel aberto:
+
+A) Temperatura normal
+   - Clique no sensor DHT22 no Wokwi e coloque a temperatura em 24.
+   - Esperado: painel mostra ~24 °C, ventilador DESLIGADO, gráfico andando,
+     contador "Leituras registradas" subindo.
+
+B) Ligar o ventilador
+   - Suba a temperatura do DHT22 para 29 ou mais.
+   - Em até 5 segundos, esperado:
+       * monitor serial: "comando recebido LIGAR" e "ventilador LIGADO"
+       * LED verde acende e o relé muda de estado
+       * painel: Ventilador = LIGADO
+
+C) Histerese (nada deve acontecer)
+   - Baixe a temperatura para 27.
+   - Esperado: ventilador continua LIGADO (está entre 26 e 28).
+
+D) Desligar o ventilador
+   - Baixe a temperatura para 26 ou menos.
+   - Esperado:
+       * monitor serial: "comando recebido DESLIGAR" e "ventilador DESLIGADO"
+       * LED apaga
+       * painel: Ventilador = DESLIGADO
+
+E) Histórico
+   - Deixe rodando até passar de 20 leituras (o contador mostra).
+   - As leituras ficam em nodered/leituras.csv
+   - Formato de cada linha: data-hora, temperatura, umidade, ventilador (1 ou 0)
+
+
+TESTE ISOLADO DO WOKWI (sem Node-RED)
+-------------------------------------
+Serve para saber se o dispositivo recebe comandos.
+1. Abra o cliente web do HiveMQ: hivemq.com/demos/websocket-client
+2. Clique em Connect.
+3. Em Publish, use:
+     Tópico:   unifor/iot/sala/ce01-marcus/ventilador/comando
+     Mensagem: {"acao":"LIGAR"}
+4. Esperado: o LED acende e o serial mostra "comando recebido LIGAR".
+   Troque por {"acao":"DESLIGAR"} para apagar.
+
+
+SE ALGO NÃO FUNCIONAR
+---------------------
+Painel não abre (localhost recusou a conexão)
+  -> O Node-RED não está rodando. Refaça o Passo 2.
+
+Painel abre, mas os valores ficam vazios
+  -> O Wokwi está parado, ou o nome da sala é diferente nos dois lados.
+     Confira SALA no main.py e os tópicos no Node-RED
+     (devem conter ce01-marcus).
+
+Ventilador não reage com a temperatura acima de 28
+  -> Confira, no terminal do Node-RED, a linha "Connected to broker".
+     Se aparecer "Connection failed", verifique a internet.
+  -> Lembre: só envia comando quando o estado muda. Se já está LIGADO,
+     nada novo é enviado.
+
+Wokwi sem "mqtt ok"
+  -> O broker público pode estar instável. Pare e rode de novo.
+
+
+ANTES DE GRAVAR O VÍDEO E TIRAR AS CAPTURAS
+-------------------------------------------
+1. Apague nodered/leituras.csv para o histórico conter só as suas leituras.
+   Pare o Node-RED (Ctrl+C), apague o arquivo e inicie de novo.
+2. Rode o ciclo do Passo 3 (A a D) com o painel e o Wokwi lado a lado.
+3. Capturas para o relatório:
+   - o circuito no Wokwi com o monitor serial;
+   - o painel com indicadores, ventilador LIGADO e o gráfico.
+4. Vídeo de 3 a 5 minutos: mostre coleta, envio, painel e a ação
+   automática (ligar e desligar). Deixe o link com acesso liberado.
+
+
+ARQUIVOS DO PROJETO
+-------------------
+wokwi/main.py, wokwi/diagram.json   código e circuito do ESP32
+nodered/flows-wokwi.json            fluxo usado com o Wokwi (HiveMQ + ce01-marcus)
+nodered/flows.json                  fluxo para teste local (broker em localhost)
+nodered/settings.js                 configuração do Node-RED
+simulacao/                          broker e dispositivo falsos para teste sem Wokwi
+evidencias/                         capturas e logs de teste
+relatorio/                          relatório (HTML e PDF)

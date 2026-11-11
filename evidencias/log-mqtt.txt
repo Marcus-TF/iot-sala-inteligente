@@ -1,0 +1,65 @@
+unifor/iot/sala/ce01/ventilador/estado {"ligado":false,"ts":1794421314}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":25.8,"umidade":62.6,"ts":1794421315}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.4,"umidade":62.8,"ts":1794421316}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.1,"umidade":63.3,"ts":1794421316}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.9,"umidade":62.4,"ts":1794421317}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.7,"umidade":61.8,"ts":1794421318}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"LIGAR","motivo":"temperatura >= 28","ts":"2026-11-11T18:21:58.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":true,"ts":1794421318}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.2,"umidade":61.9,"ts":1794421319}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.7,"umidade":62.3,"ts":1794421319}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.2,"umidade":62.6,"ts":1794421320}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.8,"umidade":62.3,"ts":1794421321}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.3,"umidade":62.1,"ts":1794421321}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":25.6,"umidade":63,"ts":1794421322}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"DESLIGAR","motivo":"temperatura <= 26","ts":"2026-11-11T18:22:02.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":false,"ts":1794421322}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.4,"umidade":63.2,"ts":1794421323}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.1,"umidade":63.5,"ts":1794421323}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.9,"umidade":64.3,"ts":1794421324}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.7,"umidade":63.5,"ts":1794421325}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"LIGAR","motivo":"temperatura >= 28","ts":"2026-11-11T18:22:05.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":true,"ts":1794421325}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.3,"umidade":63.7,"ts":1794421326}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.8,"umidade":63.5,"ts":1794421326}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.4,"umidade":62.9,"ts":1794421327}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.9,"umidade":62.3,"ts":1794421328}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.1,"umidade":63,"ts":1794421328}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":25.8,"umidade":63.2,"ts":1794421329}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"DESLIGAR","motivo":"temperatura <= 26","ts":"2026-11-11T18:22:09.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":false,"ts":1794421329}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.4,"umidade":63.5,"ts":1794421330}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.1,"umidade":63,"ts":1794421330}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.9,"umidade":63.4,"ts":1794421331}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.5,"umidade":62.6,"ts":1794421332}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"LIGAR","motivo":"temperatura >= 28","ts":"2026-11-11T18:22:12.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":true,"ts":1794421332}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28,"umidade":62.5,"ts":1794421333}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.4,"umidade":63,"ts":1794421333}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.1,"umidade":62.3,"ts":1794421334}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.7,"umidade":62.1,"ts":1794421335}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.3,"umidade":61.8,"ts":1794421335}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26,"umidade":61.5,"ts":1794421336}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"DESLIGAR","motivo":"temperatura <= 26","ts":"2026-11-11T18:22:16.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":false,"ts":1794421336}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.7,"umidade":61.1,"ts":1794421337}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.3,"umidade":60.8,"ts":1794421337}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.1,"umidade":60.1,"ts":1794421338}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"LIGAR","motivo":"temperatura >= 28","ts":"2026-11-11T18:22:18.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":true,"ts":1794421338}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.7,"umidade":59.2,"ts":1794421339}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.3,"umidade":58.6,"ts":1794421340}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.7,"umidade":58.8,"ts":1794421340}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.2,"umidade":59.3,"ts":1794421341}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":25.6,"umidade":58.4,"ts":1794421342}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"DESLIGAR","motivo":"temperatura <= 26","ts":"2026-11-11T18:22:22.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":false,"ts":1794421342}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":26.3,"umidade":58.2,"ts":1794421342}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.1,"umidade":57.4,"ts":1794421343}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.8,"umidade":57,"ts":1794421344}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28.4,"umidade":56.7,"ts":1794421344}
+unifor/iot/sala/ce01/ventilador/comando {"acao":"LIGAR","motivo":"temperatura >= 28","ts":"2026-11-11T18:22:24.000Z"}
+unifor/iot/sala/ce01/ventilador/estado {"ligado":true,"ts":1794421344}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":28,"umidade":57.4,"ts":1794421345}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27.4,"umidade":57.2,"ts":1794421346}
+unifor/iot/sala/ce01/sensores {"sala":"ce01","temperatura":27,"umidade":56.7,"ts":1794421347}

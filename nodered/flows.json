@@ -1,0 +1,446 @@
+[
+  {
+    "id": "tab",
+    "type": "tab",
+    "label": "Sala inteligente",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "broker",
+    "type": "mqtt-broker",
+    "name": "Broker",
+    "broker": "localhost",
+    "port": "1883",
+    "clientid": "nodered-sala-ce01",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true
+  },
+  {
+    "id": "in",
+    "type": "mqtt in",
+    "z": "tab",
+    "name": "Sensores",
+    "topic": "unifor/iot/sala/ce01/sensores",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "broker",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 110,
+    "y": 120,
+    "wires": [
+      [
+        "regra"
+      ]
+    ]
+  },
+  {
+    "id": "regra",
+    "type": "function",
+    "z": "tab",
+    "name": "Regra de automação",
+    "func": "const d = msg.payload;\nif (!d || typeof d.temperatura !== 'number' || typeof d.umidade !== 'number') {\n    node.warn('leitura invalida descartada');\n    return null;\n}\nconst LIMITE_LIGAR = 28;\nconst LIMITE_DESLIGAR = 26;\nconst ts = d.ts > 1000000000 ? new Date(d.ts * 1000).toISOString() : new Date().toISOString();\nlet ligado = context.get('ligado') || false;\nconst total = (context.get('total') || 0) + 1;\ncontext.set('total', total);\nlet comando = null;\nif (!ligado && d.temperatura >= LIMITE_LIGAR) {\n    ligado = true;\n    comando = { acao: 'LIGAR', motivo: 'temperatura >= ' + LIMITE_LIGAR, ts: ts };\n} else if (ligado && d.temperatura <= LIMITE_DESLIGAR) {\n    ligado = false;\n    comando = { acao: 'DESLIGAR', motivo: 'temperatura <= ' + LIMITE_DESLIGAR, ts: ts };\n}\ncontext.set('ligado', ligado);\nreturn [\n    { payload: d.temperatura, topic: 'Temperatura' },\n    { payload: d.umidade },\n    comando ? { payload: comando } : null,\n    { payload: ts + ',' + d.temperatura + ',' + d.umidade + ',' + (ligado ? 1 : 0) },\n    { payload: total }\n];",
+    "outputs": 5,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 330,
+    "y": 120,
+    "wires": [
+      [
+        "gt",
+        "ch"
+      ],
+      [
+        "gu"
+      ],
+      [
+        "cmd"
+      ],
+      [
+        "csv"
+      ],
+      [
+        "tot"
+      ]
+    ]
+  },
+  {
+    "id": "cmd",
+    "type": "json",
+    "z": "tab",
+    "name": "",
+    "property": "payload",
+    "action": "",
+    "pretty": false,
+    "x": 530,
+    "y": 200,
+    "wires": [
+      [
+        "out"
+      ]
+    ]
+  },
+  {
+    "id": "out",
+    "type": "mqtt out",
+    "z": "tab",
+    "name": "Comando ventilador",
+    "topic": "unifor/iot/sala/ce01/ventilador/comando",
+    "qos": "1",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "broker",
+    "x": 730,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "csv",
+    "type": "file",
+    "z": "tab",
+    "name": "Registro CSV",
+    "filename": "leituras.csv",
+    "filenameType": "str",
+    "appendNewline": true,
+    "createDir": true,
+    "overwriteFile": "false",
+    "encoding": "none",
+    "x": 530,
+    "y": 260,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "in2",
+    "type": "mqtt in",
+    "z": "tab",
+    "name": "Estado do ventilador",
+    "topic": "unifor/iot/sala/ce01/ventilador/estado",
+    "qos": "0",
+    "datatype": "json",
+    "broker": "broker",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 130,
+    "y": 340,
+    "wires": [
+      [
+        "fmt"
+      ]
+    ]
+  },
+  {
+    "id": "fmt",
+    "type": "function",
+    "z": "tab",
+    "name": "Formatar estado",
+    "func": "const e = msg.payload;\nmsg.payload = e.ligado ? 'LIGADO' : 'DESLIGADO';\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 340,
+    "y": 340,
+    "wires": [
+      [
+        "tx"
+      ]
+    ]
+  },
+  {
+    "id": "ub",
+    "type": "ui-base",
+    "name": "Sala inteligente",
+    "path": "/dashboard",
+    "includeClientData": true,
+    "acceptsClientConfig": [
+      "ui-notification",
+      "ui-control"
+    ],
+    "showPathInSidebar": false,
+    "showPathInFooter": false,
+    "headerContent": "page",
+    "navigationStyle": "none",
+    "titleBarStyle": "default"
+  },
+  {
+    "id": "th",
+    "type": "ui-theme",
+    "name": "Tema",
+    "colors": {
+      "surface": "#22333e",
+      "primary": "#f28c38",
+      "bgPage": "#16222a",
+      "groupBg": "#22333e",
+      "groupOutline": "#3a5160"
+    },
+    "sizes": {
+      "density": "default",
+      "pagePadding": "12px",
+      "groupGap": "12px",
+      "groupBorderRadius": "6px",
+      "widgetGap": "12px"
+    }
+  },
+  {
+    "id": "pg",
+    "type": "ui-page",
+    "name": "Monitoramento",
+    "ui": "ub",
+    "path": "/monitor",
+    "icon": "home",
+    "layout": "grid",
+    "theme": "th",
+    "breakpoints": [
+      {
+        "name": "Default",
+        "px": "0",
+        "cols": "3"
+      },
+      {
+        "name": "Tablet",
+        "px": "576",
+        "cols": "6"
+      },
+      {
+        "name": "Small Desktop",
+        "px": "768",
+        "cols": "9"
+      },
+      {
+        "name": "Desktop",
+        "px": "1024",
+        "cols": "12"
+      }
+    ],
+    "order": 1,
+    "className": ""
+  },
+  {
+    "id": "g1",
+    "type": "ui-group",
+    "name": "Indicadores",
+    "page": "pg",
+    "width": "12",
+    "height": "1",
+    "order": 1,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false"
+  },
+  {
+    "id": "g2",
+    "type": "ui-group",
+    "name": "Histórico de temperatura",
+    "page": "pg",
+    "width": "12",
+    "height": "1",
+    "order": 2,
+    "showTitle": true,
+    "className": "",
+    "visible": "true",
+    "disabled": "false"
+  },
+  {
+    "id": "gt",
+    "type": "ui-gauge",
+    "z": "tab",
+    "name": "Temperatura",
+    "group": "g1",
+    "order": 1,
+    "width": "4",
+    "height": "4",
+    "gtype": "gauge-half",
+    "gstyle": "needle",
+    "title": "Temperatura",
+    "units": "°C",
+    "icon": "",
+    "prefix": "",
+    "suffix": "",
+    "segments": [
+      {
+        "from": "15",
+        "color": "#5cd65c"
+      },
+      {
+        "from": "26",
+        "color": "#ffc800"
+      },
+      {
+        "from": "28",
+        "color": "#ea5353"
+      }
+    ],
+    "min": 15,
+    "max": 40,
+    "sizeThickness": 16,
+    "sizeGap": 4,
+    "sizeKeyThickness": 8,
+    "styleRounded": true,
+    "styleGlow": false,
+    "className": "",
+    "x": 600,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "gu",
+    "type": "ui-gauge",
+    "z": "tab",
+    "name": "Umidade",
+    "group": "g1",
+    "order": 2,
+    "width": "4",
+    "height": "4",
+    "gtype": "gauge-half",
+    "gstyle": "needle",
+    "title": "Umidade",
+    "units": "%",
+    "icon": "",
+    "prefix": "",
+    "suffix": "",
+    "segments": [
+      {
+        "from": "0",
+        "color": "#ffc800"
+      },
+      {
+        "from": "40",
+        "color": "#5cd65c"
+      },
+      {
+        "from": "70",
+        "color": "#ffc800"
+      }
+    ],
+    "min": 0,
+    "max": 100,
+    "sizeThickness": 16,
+    "sizeGap": 4,
+    "sizeKeyThickness": 8,
+    "styleRounded": true,
+    "styleGlow": false,
+    "className": "",
+    "x": 600,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "tx",
+    "type": "ui-text",
+    "z": "tab",
+    "group": "g1",
+    "order": 3,
+    "width": "2",
+    "height": "2",
+    "name": "Ventilador",
+    "label": "Ventilador",
+    "format": "{{msg.payload}}",
+    "layout": "col-center",
+    "style": false,
+    "font": "",
+    "fontSize": 24,
+    "color": "#f28c38",
+    "wrapText": false,
+    "className": "",
+    "x": 540,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "tot",
+    "type": "ui-text",
+    "z": "tab",
+    "group": "g1",
+    "order": 4,
+    "width": "2",
+    "height": "2",
+    "name": "Leituras",
+    "label": "Leituras registradas",
+    "format": "{{msg.payload}}",
+    "layout": "col-center",
+    "style": false,
+    "font": "",
+    "fontSize": 24,
+    "color": "#ffffff",
+    "wrapText": false,
+    "className": "",
+    "x": 600,
+    "y": 400,
+    "wires": []
+  },
+  {
+    "id": "ch",
+    "type": "ui-chart",
+    "z": "tab",
+    "group": "g2",
+    "name": "Temperatura",
+    "label": "Temperatura (°C)",
+    "order": 1,
+    "chartType": "line",
+    "category": "topic",
+    "categoryType": "msg",
+    "xAxisLabel": "",
+    "xAxisProperty": "",
+    "xAxisPropertyType": "timestamp",
+    "xAxisType": "time",
+    "xAxisFormat": "",
+    "xAxisFormatType": "auto",
+    "xmin": "",
+    "xmax": "",
+    "yAxisLabel": "°C",
+    "yAxisProperty": "payload",
+    "yAxisPropertyType": "msg",
+    "ymin": "15",
+    "ymax": "40",
+    "bins": 10,
+    "action": "append",
+    "stackSeries": false,
+    "pointShape": "circle",
+    "pointRadius": 3,
+    "showLegend": false,
+    "removeOlderPoints": "60",
+    "removeOlderUnit": "1",
+    "colors": [
+      "#f28c38",
+      "#ffc800",
+      "#5cd65c"
+    ],
+    "textColor": [
+      "#ffffff"
+    ],
+    "textColorDefault": false,
+    "gridColor": [
+      "#3a5160"
+    ],
+    "gridColorDefault": false,
+    "width": "12",
+    "height": "6",
+    "className": "",
+    "interpolation": "linear",
+    "x": 600,
+    "y": 460,
+    "wires": [
+      []
+    ]
+  }
+]
