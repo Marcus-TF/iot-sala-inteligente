@@ -8,6 +8,4 @@ Monitoramento de temperatura e umidade de uma sala de aula com ventilação auto
 - `evidencias/`: captura do dashboard e logs da execução de teste.
 - `relatorio/relatorio-iot.pdf`: relatório (edite `relatorio.html` e gere de novo).
 
-Passo a passo completo em `COMO-TESTAR.txt`.
-
 Teste local sem Wokwi: `cd simulacao && npm i`, `node broker.js`, suba o Node-RED com `flows.json` e rode `node dispositivo.js`. Painel em `/dashboard/monitor`.
